@@ -23,7 +23,7 @@
 #include <linux/i2c.h>
 #include <linux/delay.h>
 
-DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr);
+DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr); 
 
 #define LME2510C_FIRMWARE "dvb-usb-lme2510c-0.fw"
 
@@ -33,7 +33,7 @@ struct lme2510c_dev {
 	struct si2168_config si2168_config;
 	struct si2157_config si2157_config;
 	struct i2c_client *i2c_client_demod;
-	struct i2c_client *i2c_client_tuner;
+	struct i2c_client *i2c_client_tuner; 
 	enum fe_status fe_status;
 	int (*fe_read_status)(struct dvb_frontend *fe, enum fe_status *status);
 };
