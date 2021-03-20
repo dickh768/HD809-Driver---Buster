@@ -3,7 +3,10 @@
  * Silicon Labs Si2146/2147/2148/2157/2158 silicon tuner driver
  *
  * Copyright (C) 2014 Antti Palosaari <crope@iki.fi>
+ *               2021 Richard Hall 
  */
+
+//  Mar 2021 Revised to use new firmware and commands copied from HD809 Android app.
 
 #include <linux/delay.h>
 
@@ -356,15 +359,13 @@ static int si2157_set_params(struct dvb_frontend *fe)
 	}
 
 
-	/* insert unnecessary read of the chip version number just to wake up the si2168 */
-	memcpy(cmd.args, "\x02", 1);
-	cmd.wlen = 1;
-	cmd.rlen = 13;
+	/* force a pair of gate commands just to wake up the si2168 */
+
+	cmd.wlen = 0;
+	cmd.rlen = 0;
 	ret = si2157_cmd_execute(client, &cmd);
 	if (ret)
 		goto err;
-
-
 
 
 	memcpy(cmd.args, "\x14\x00\x02\x07\x01\x01", 6);
@@ -376,7 +377,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 		goto err;
 
 
-
 	memcpy(cmd.args, "\xc0\x00\x0c", 3);
 
 	cmd.wlen = 3;
@@ -384,9 +384,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 	ret = si2157_cmd_execute(client, &cmd);
 	if (ret)
 		goto err;
-
-
-
 
 
 	if (dev->chiptype == SI2157_CHIPTYPE_SI2146)
@@ -399,7 +396,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 	ret = si2157_cmd_execute(client, &cmd);
 	if (ret)
 		goto err;
-
 
 
 	/* set frequency */
@@ -415,7 +411,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 		goto err;
 
 
-
 	for (i = 1; i <= 100; ++i) {
 
 	// keep reading until it returns '85'
@@ -429,8 +424,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 	//check return value for recognised protocol
 	if(cmd.args[0] == '\x85') break;
 
-
-
    }
 
 
@@ -443,8 +436,6 @@ static int si2157_set_params(struct dvb_frontend *fe)
 		goto err;
 
 	msleep(85); 
-
-
 
 
 	return 0;
@@ -494,7 +485,6 @@ static void si2157_stat_work(struct work_struct *work)
 	ret = si2157_cmd_execute(client, &cmd);
 	if (ret)
 		goto err;
-
 
 
 	c->strength.stat[0].scale = FE_SCALE_DECIBEL;
