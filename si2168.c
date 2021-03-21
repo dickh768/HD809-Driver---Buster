@@ -2,11 +2,13 @@
 /*
  * Silicon Labs Si2168 DVB-T/T2/C demodulator driver
  *
- * Copyright (C) 2014 Antti Palosaari <crope@iki.fi> 
+ * Copyright (C) 2014 Antti Palosaari <crope@iki.fi>
+ *               2011 Richard Hall 
  */
 
 //Revised Mar 2021  - Updated version only tested with HD809 / Sin Hon TDH601
-//This version mimics the Android App for the adapter and tests multiple protocols and ignores many client settings
+//This version mimics the Android App for the adapter by cycling through multiple protocols to find the best settings
+//Requires updated firmware
 
 #include <linux/delay.h>
 

@@ -14,7 +14,7 @@
  *    GNU General Public License for more details.
  */
 
-// Revised Mar 2021 
+// Revised Mar 2021 to replace block on I2c commands whilst streaming.
 
 
 #include "dvb_usb.h"
