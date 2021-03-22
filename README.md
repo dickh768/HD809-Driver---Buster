@@ -6,7 +6,7 @@
 
 I have now hacked together a system which works well on a Raspberry Pi. Others may find my experiences useful in pursuing similar projects.
 
-Details are in the file Investigation.epub  - those without an epub reader can unzip the file and read the .xhtml files in a browser.
+
 
 
 
